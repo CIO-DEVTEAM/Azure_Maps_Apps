@@ -1,0 +1,24 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "test-demo-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/testDemo/TestDemoWebPart.js",
+          "manifest": "./src/webparts/testDemo/TestDemoWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {
+    "bingmaps": {
+      "path": "https://www.bing.com/api/maps/mapcontrol?callback=MyFunction",
+      "globalName": "Microsoft"
+    }
+  },
+  "localizedResources": {
+    "TestDemoWebPartStrings": "lib/webparts/testDemo/loc/{locale}.js",
+    "ControlStrings": "node_modules/@pnp/spfx-controls-react/lib/loc/{locale}.js"
+  }
+}

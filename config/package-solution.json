@@ -1,0 +1,46 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "Position Finder Map",
+    "id": "4eaad344-e48c-4a01-a3f4-50563b147cc0",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "webApiPermissionRequests": [  
+  {  
+    "resource": "Microsoft Graph",  
+    "scope": "User.Read.All"  
+  }  
+], 
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.17.2"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "SPFx React Azure Map"
+      },
+      "longDescription": {
+        "default": "SPFx with two react components. The parent component displays the Fluent UI detailslist and the global view of all poistions listed in a SharePoint list, while the child React Class component hosts the zoomed in view of the list item's location with details."
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "react-test Feature",
+        "description": "The feature that activates elements of the react-test solution.",
+        "id": "1f89ba93-0716-441a-8087-84a10263e91f",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/react-test.sppkg"
+  }
+}
