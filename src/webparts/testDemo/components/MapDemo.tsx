@@ -58,7 +58,7 @@ export default class MapDemo extends React.Component<IListItems, IMapDemoState, 
         subscriptionKey: subscriptionKey
       },
       center: [lat, long],
-      zoom: 13,
+      zoom: 9,
       renderWorldCopies: false,
       style: "road_shaded_relief",
       enableAccessibility: false,
@@ -88,7 +88,7 @@ export default class MapDemo extends React.Component<IListItems, IMapDemoState, 
       const lat = Number(arrCoor[1]);
       this.map.setCamera({
         center: [lat, long],
-        zoom: 13
+        zoom: 9
       });
       const popup = new atlas.Popup({
         pixelOffset: [0, -18],

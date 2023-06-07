@@ -118,13 +118,10 @@ export default class TestDemo extends React.Component<ITestDemoProps, IListItems
 
   public async _getListData(): Promise<IListItemState[]> {
     return this.props.spHttpClient.get(`${this.props.siteUrl}/_api/web/lists/GetByTitle('MapPositionFields')/items`,
-      SPHttpClient.configurations.v1).then((response: SPHttpClientResponse) => {
-        return response.json().then(data => {
-          console.log(data.value);
-          return data.value;
-
-
-        });
+      SPHttpClient.configurations.v1).then(async (response: SPHttpClientResponse) => {
+        const data = await response.json();
+        console.log(data.value);
+        return data.value;
       });
   }
 
@@ -205,11 +202,12 @@ export default class TestDemo extends React.Component<ITestDemoProps, IListItems
       
       myMap.layers.add(symbolLayer);
       
-      // const popup = new atlas.Popup({
-      //   pixelOffset: [0, -18]
-      // });
+      const popup = new atlas.Popup({
+        pixelOffset: [0, -18]
+      });
+      console.log(popup);
       
-      myMap.events.add('click', symbolLayer, function(e:any) {
+      myMap.events.add('click', symbolLayer, function(e:atlas.PopupOptions) {
 
         const popupTemplate = `<div style="max-width:500px;font-size:12px;"><div class="name" style="font-size:14px;font-weight:bold;margin:15px;"><p>Open Positions:<br/>{name}</p><p>{description}</p></div>`;
   
@@ -221,7 +219,6 @@ export default class TestDemo extends React.Component<ITestDemoProps, IListItems
         if (e.shapes && e.shapes.length > 0) {
             let content: string;
             let coordinate: any;
-    
       //       // Check to see if the first value in the shapes array is a Point Shape.
             if (
               e.shapes[0] instanceof atlas.Shape &&
@@ -299,7 +296,7 @@ export default class TestDemo extends React.Component<ITestDemoProps, IListItems
          <MarqueeSelection selection={this._selection}>
           <DetailsList
             selectionMode={SelectionMode.single}
-            isSelectedOnFocus={true}
+            isSelectedOnFocus={false}
             items={this.state.items}
             columns={this.listColumns}
             setKey="set" 
@@ -307,7 +304,7 @@ export default class TestDemo extends React.Component<ITestDemoProps, IListItems
             onRenderItemColumn={this._onRenderItemColumn}
             layoutMode={DetailsListLayoutMode.justified}
             selection={this._selection}
-            selectionPreservedOnEmptyClick={true}
+            selectionPreservedOnEmptyClick={false}
             ariaLabelForSelectionColumn="Toggle selection"
             ariaLabelForSelectAllCheckbox="Toggle selection for all items"
             checkButtonAriaLabel="select row"
@@ -321,8 +318,8 @@ export default class TestDemo extends React.Component<ITestDemoProps, IListItems
   private _getSelectionDetails(): string{
     
     const selectionCount = this._selection.getSelectedCount();
-    if(selectionCount === 1 ){this.setState({ZoomIn:false})
-      this.setState({ZoomIn:true})
+    if(selectionCount === 1 ){this.setState({ZoomIn:true})
+      //this.setState({ZoomIn:true})
      
     }
       

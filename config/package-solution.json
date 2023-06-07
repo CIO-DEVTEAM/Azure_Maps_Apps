@@ -33,7 +33,7 @@
     },
     "features": [
       {
-        "title": "react-test Feature",
+        "title": "Azure Map SDK Feature",
         "description": "The feature that activates elements of the react-test solution.",
         "id": "1f89ba93-0716-441a-8087-84a10263e91f",
         "version": "1.0.0.0"
