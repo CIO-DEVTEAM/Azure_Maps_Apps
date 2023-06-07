@@ -158,7 +158,7 @@ export default class TestDemo extends React.Component<ITestDemoProps, IListItems
    public getMap() {
       //let popup = new atlas.Popup;
       const mapitems = this.state.items;
-      const subscriptionKey = 'WxMw69k-g5MABaqjdp4jKrekA-m2ALfk-qzeeJA160Y';
+      const subscriptionKey = 'Your_Azure_Maps_Subscription_KEY';
       const myMap = new atlas.Map('map', {
         authOptions: {
           authType: atlas.AuthenticationType.subscriptionKey,
