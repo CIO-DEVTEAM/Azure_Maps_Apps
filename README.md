@@ -4,7 +4,7 @@
 
 Displaying Azure Map using SharePoint Online list with lat and long fields.
 
-
+![alt text](http://url/to/img.png)
 
 [picture of the solution in action, if possible]
 
