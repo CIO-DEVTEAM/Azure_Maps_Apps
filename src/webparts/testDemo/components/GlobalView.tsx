@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import * as React from 'react';
 import { Announced } from '@fluentui/react/lib/Announced';
 import { DetailsList, IColumn, Selection, DetailsListLayoutMode, SelectionMode } from '@fluentui/react/lib/DetailsList';
