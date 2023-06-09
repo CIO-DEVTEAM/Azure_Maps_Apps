@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@azure-rest/maps-render": "^1.0.0-beta.1",
+    "@azure/maps-search": "^1.0.0-beta.2",
     "@azure/ms-rest-azure-js": "^2.1.0",
     "@fluentui/react": "^7.199.1",
     "@microsoft/atlas-css": "^3.33.0",
@@ -32,6 +33,7 @@
     "bingmaps-react": "^1.2.10",
     "guid-typescript": "^1.0.9",
     "mapbox-gl": "^2.14.1",
+    "office-ui-fabric-core": "^11.1.0",
     "office-ui-fabric-react": "^7.199.1",
     "react-bingmaps": "^3.6.1",
     "tslib": "2.3.1"

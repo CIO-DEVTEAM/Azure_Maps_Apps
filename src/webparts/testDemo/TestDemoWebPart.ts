@@ -7,7 +7,7 @@ import {
 } from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import * as strings from 'TestDemoWebPartStrings';
-import TestDemo from './components/TestDemo';
+import GlobalView from './components/GlobalView';
 import { ITestDemoProps } from './components/ITestDemoProps';
 import { getSP } from '../../pnpjs-config';
 
@@ -19,7 +19,7 @@ export default class TestDemoWebPart extends BaseClientSideWebPart<ITestDemoWebP
 
   public render(): void {
     const element: React.ReactElement<ITestDemoProps> = React.createElement(
-      TestDemo,
+      GlobalView,
       {
         spHttpClient: this.context.spHttpClient,
         siteUrl:this.context.pageContext.web.absoluteUrl,

@@ -1,13 +1,10 @@
 
 import * as React from 'react';
 import * as atlas from 'azure-maps-control';
-import { IListItems } from './TestDemo';
+import { IListItems } from './GlobalView';
 import { ITestDemoProps } from './ITestDemoProps';
 import 'azure-maps-control/dist/atlas.min.css';
 import styles from './TestDemo.module.scss';
-import "@pnp/sp/webs";
-import "@pnp/sp/site-users/web";
-import "@pnp/sp/profiles";
 
 
 export interface IMapDemoState {
@@ -15,7 +12,7 @@ export interface IMapDemoState {
   
 }
 
-export default class MapDemo extends React.Component<IListItems, IMapDemoState, ITestDemoProps> {
+export default class ZoomView extends React.Component<IListItems, IMapDemoState, ITestDemoProps> {
 
   public locations: Location[];
   public popup: atlas.Popup;
@@ -43,7 +40,7 @@ export default class MapDemo extends React.Component<IListItems, IMapDemoState, 
   public componentDidMount(): void {
 
     console.log("componentDidMount");
-    const subscriptionKey = 'WxMw69k-g5MABaqjdp4jKrekA-m2ALfk-qzeeJA160Y';
+    const subscriptionKey = 'YourSubscriptionKeyHere';
     const twoValues = this.props.selectionDetails;
     const arrValues = twoValues.split("//");
     const coor = arrValues[0];
@@ -60,11 +57,15 @@ export default class MapDemo extends React.Component<IListItems, IMapDemoState, 
       center: [lat, long],
       zoom: 9,
       renderWorldCopies: false,
+      interactive: false,
+      language: 'en-US',
       style: "road_shaded_relief",
+      pitch: 90,
       enableAccessibility: false,
       showLogo: false,
       showFeedbackLink: false,
       shortcutKey: false,
+      showBuildingModels: true,
       view: "Auto",
     });
     const popup = new atlas.Popup({
@@ -75,8 +76,7 @@ export default class MapDemo extends React.Component<IListItems, IMapDemoState, 
     popup.open(this.map)
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  public componentDidUpdate(prevProps: { selectionDetails: string | string[]; }, prevState: never) {
+  public componentDidUpdate(prevProps: { selectionDetails: string | string[]; }, prevState: never):void {
     if (prevProps.selectionDetails !== this.props.selectionDetails) {
       // Update the map's center
       const twoValues = this.props.selectionDetails;
@@ -107,7 +107,7 @@ export default class MapDemo extends React.Component<IListItems, IMapDemoState, 
 
   public render(): React.ReactElement<IListItems> {
     return (
-      <div ref={this.mapRef} className={styles.one} />)
+      <div ref={this.mapRef} className={styles.one}/>)
   }
 }
 

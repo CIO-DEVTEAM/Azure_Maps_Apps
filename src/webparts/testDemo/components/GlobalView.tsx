@@ -8,17 +8,21 @@ import { PrimaryButton } from '@fluentui/react/lib/Button';
 import {
   SPHttpClient, SPHttpClientResponse
 } from '@microsoft/sp-http';
+//import { MapsSearchClient, AzureKeyCredential } from '@azure/maps-search';
 import { ITestDemoProps } from './ITestDemoProps';
 import styles from './TestDemo.module.scss';
 import * as atlas from 'azure-maps-control';
 //import { Text } from '@fluentui/react/lib/Text'
 import { mergeStyles } from '@fluentui/react/lib/Styling';
-import MapDemo from './MapDemo';
 import 'azure-maps-control/dist/atlas.min.css';
 import { getSP } from "../../../pnpjs-config";
 import { SPFI, spfi } from "@pnp/sp";
 import "@pnp/sp/webs";
 import "@pnp/sp/site-users/web";
+import ZoomView from './ZoomView';
+import { GlobeMap } from './GlobeMap';
+
+
 const exampleChildClass = mergeStyles({
   display: 'block',
   marginBottom: '10px',
@@ -39,14 +43,9 @@ export interface IListItems {
   items: IListItemState[];
   selectionDetails: string;
   ZoomIn: boolean;
-  //mapdata: number;
 }
 
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-function-return-type
-
-
-export default class TestDemo extends React.Component<ITestDemoProps, IListItems> {
+export default class GlobalView extends React.Component<ITestDemoProps, IListItems> {
 
   
   public _sp: SPFI;
@@ -61,9 +60,11 @@ export default class TestDemo extends React.Component<ITestDemoProps, IListItems
   private listItems: IListItemState[];
   private _selection: Selection;
   static selectionDetails: number;
+  public mapRef: any;
   constructor(props: ITestDemoProps) {
     super(props);
     this.listItems = [];
+    this.mapRef = React.createRef();
     // this.mapRef = React.createRef();
     this.dataSource = new atlas.source.DataSource();
     this.popup = new atlas.Popup();
@@ -78,25 +79,24 @@ export default class TestDemo extends React.Component<ITestDemoProps, IListItems
       { key: 'Region', name: 'Region', fieldName: 'Region', minWidth: 50, maxWidth: 50, isResizable: true },
       { key: 'Country', name: 'Country', fieldName: 'Country', minWidth: 75, maxWidth: 80, isResizable: true },
       { key: 'DutyDescription', name: 'Duty Description', fieldName: 'DutyDescription', minWidth: 100, maxWidth: 200, isResizable: true },
-    //  { key: 'Longitude', name: 'Longitude', fieldName: 'Longitude', minWidth: 75, maxWidth: 100, isResizable: true },
-    //  { key: 'Latitude', name: 'Latitude', fieldName: 'Latitude', minWidth: 75, maxWidth: 100, isResizable: true }
+      { key: 'Longitude', name: 'Longitude', fieldName: 'Longitude', minWidth: 75, maxWidth: 100, isResizable: true },
+      { key: 'Latitude', name: 'Latitude', fieldName: 'Latitude', minWidth: 75, maxWidth: 100, isResizable: true }
     ];
 
     this.state = {
       items: this.listItems,
       ZoomIn: false,
       selectionDetails: this._getSelectionDetails(),
-      //mapdata: (this._selection.getSelection()[0] as IListItemState).GeoLoc
     };
     this._sp = getSP();
   }
 
 
    
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  public componentDidMount(): void {
+  public async componentDidMount():Promise<void> {
     console.log("componentDidMount")
-    this._renderList();
+    //this.getMap()
+    await this._renderList();
 
 
 
@@ -104,13 +104,10 @@ export default class TestDemo extends React.Component<ITestDemoProps, IListItems
   }
   public componentDidUpdate(): void {
     console.log("componentDidUpdate")
-    if(this.state.ZoomIn === false && this._selection.getSelectedCount() === 0){
-    // const selectionCount = this._selection.getSelectedCount();
-    // if(selectionCount === 0){
-    //      this.setState({ZoomIn:false})
-    this.getMap()
-    }
-    //   }
+    //if(this.state.ZoomIn === false && this._selection.getSelectedCount() === 0){
+    // this.getMap()
+    //}
+ 
   
     
   }
@@ -125,16 +122,11 @@ export default class TestDemo extends React.Component<ITestDemoProps, IListItems
       });
   }
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  public _renderList() {
+  public async _renderList():Promise <void> {
 
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    this._getListData().then(response => {
+ await this._getListData().then(response => {
 
-      //console.log(response);
       response.forEach(item => {
-
-        //console.log(item.Title);
         this.state.items.push({
           Title: item.Title,
           Region: item.Region,
@@ -144,128 +136,16 @@ export default class TestDemo extends React.Component<ITestDemoProps, IListItems
           Longitude: item.Longitude,
           Latitude: item.Latitude,
           GeoLoc: item.GeoLoc
-
         });
       });
       this.setState({
         items: this.state.items
 
       });
-      this.getMap();
+  
     });
   }
 
-   public getMap() {
-      //let popup = new atlas.Popup;
-      const mapitems = this.state.items;
-      const subscriptionKey = 'Your_Azure_Maps_Subscription_KEY';
-      const myMap = new atlas.Map('map', {
-        authOptions: {
-          authType: atlas.AuthenticationType.subscriptionKey,
-          subscriptionKey: subscriptionKey
-        },
-        center: [0, 0],
-        zoom: 1.2,
-        renderWorldCopies: false,
-        style: "road_shaded_relief",
-        enableAccessibility: false,
-        showLogo: false,
-        showFeedbackLink: false,
-        shortcutKey: false,
-        dragPanInteraction: true,
-        interactive: true
-      });
-
-    myMap.events.add('ready', function () {
-      const datasource = new atlas.source.DataSource(null, {
-        cluster: true 
-      });
-      myMap.sources.add(datasource);
-
-      for (let i = 0; i < mapitems.length; i++) {
-        const latitude = mapitems[i].Latitude;
-        const longitude = mapitems[i].Longitude;
-
-        const point = new atlas.data.Feature(new atlas.data.Point([latitude, longitude]), {
-          name: mapitems[i].Title,
-          description: mapitems[i].DutyDescription,
-        });
-
-        datasource.add([point]);
-      
-      }
-      const symbolLayer = new atlas.layer.SymbolLayer(datasource, null, {
-        iconOptions: {
-          image: 'pin-red',
-        },
-      });
-      
-      myMap.layers.add(symbolLayer);
-      
-      const popup = new atlas.Popup({
-        pixelOffset: [0, -18]
-      });
-      console.log(popup);
-      
-      myMap.events.add('click', symbolLayer, function(e:atlas.PopupOptions) {
-
-        const popupTemplate = `<div style="max-width:500px;font-size:12px;"><div class="name" style="font-size:14px;font-weight:bold;margin:15px;"><p>Open Positions:<br/>{name}</p><p>{description}</p></div>`;
-  
-        //  Create a popup but leave it closed so we can update it and display it later.
-          const popup = new atlas.Popup({
-            pixelOffset: [0, -18],
-          });
-      //   //Make sure the event occurred on a point feature.
-        if (e.shapes && e.shapes.length > 0) {
-            let content: string;
-            let coordinate: any;
-      //       // Check to see if the first value in the shapes array is a Point Shape.
-            if (
-              e.shapes[0] instanceof atlas.Shape &&
-              e.shapes[0].getType() === 'Point'
-            ) {
-              const properties = e.shapes[0].getProperties();
-              content = popupTemplate
-                .replace(/{name}/g, properties.name)
-                .replace(/{description}/g, properties.description);
-              coordinate = e.shapes[0].getCoordinates();
-            } else if (
-              e.shapes[0].type === 'Feature' &&
-              e.shapes[0].geometry.type === 'Point'
-            ) {
-      //         // Check to see if the feature is a cluster.
-              if (e.shapes[0].properties.cluster) {
-                content = `<div style="max-width:500px;font-size:14px;font-weight:bold;padding:20px;">Cluster of ${e.shapes[0].properties.point_count} locations with open positions</div>`;
-              } else {
-      //           // Feature is likely from a VectorTileSource.
-                const properties = e.shapes[0].properties;
-                content = popupTemplate
-                  .replace(/{name}/g, properties.name)
-                  .replace(/{description}/g, properties.description);
-              }
-    
-              coordinate = e.shapes[0].geometry.coordinates;
-            }
-    
-            if (content && coordinate) {
-              // Populate the popupTemplate with data from the clicked point feature.
-              popup.setOptions({
-      //           // Update the content of the popup.
-                content: content,
-    
-      //           // Update the position of the popup with the symbols coordinate.
-                position: coordinate,
-              });
-    
-      //         // Open the popup.
-              popup.open(myMap);
-          }
-        }
-      })
-    
-  });
- 
-}
 
   public render(): React.ReactElement<IListItems> {
    
@@ -275,7 +155,7 @@ export default class TestDemo extends React.Component<ITestDemoProps, IListItems
     return (
       <div className={styles.wrapper}>
        
-        {!this.state.ZoomIn  &&   <div id={'map'} className={styles.one}/>} {this.state.ZoomIn &&  <div className={styles.one}> <MapDemo selectionDetails={selectionDetails} ZoomIn={ZoomIn} items={items}/>
+        {!this.state.ZoomIn  &&   <GlobeMap ZoomIn={ZoomIn} items={items} selectionDetails={selectionDetails}/>} {this.state.ZoomIn &&  <div className={styles.one}> <ZoomView selectionDetails={selectionDetails} ZoomIn={ZoomIn} items={items}/>
 
         </div>}
         <div className={styles.two}>
@@ -339,16 +219,9 @@ export default class TestDemo extends React.Component<ITestDemoProps, IListItems
         
     }
   }
-//   private _onRenderItemColumn(item: IListItemState, index: number, column: IColumn): JSX.Element {
-//     if (column.fieldName === 'Id') {
-//         return  <DefaultButton data-selection-invoke={true}>{"View Position"} onClick={this.setState({ZoomIn:true})}</DefaultButton>
-//         //<DefaultButton data-selection-invoke={true}>{"Edit"}</DefaultButton>;
-//     }
-//     return item[column.fieldName];
-// }
 private _onRenderItemColumn = (item: IListItemState, index: number, column: IColumn): JSX.Element | string => {
   const fieldContent = item.Title as string;
-  console.log(fieldContent);
+ // console.log(fieldContent);
   const key = column.key as keyof IListItemState;
   if (column.fieldName === 'Id' ) {
      return <PrimaryButton text={"Contact POC"} onClick={() => this._onItemInvoked(fieldContent)} />
@@ -356,9 +229,6 @@ private _onRenderItemColumn = (item: IListItemState, index: number, column: ICol
    return String(item[key]);
  };
 
-
-
-  
   private _onFilter = (ev: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, text: string): void => {
     this.setState({
       items: text ? this.listItems.filter(i => i.Title.toLowerCase().indexOf(text) > -1) : this.listItems,
@@ -376,21 +246,7 @@ private _onRenderItemColumn = (item: IListItemState, index: number, column: ICol
         Title: user.UserPrincipalName,
         Position: fieldContent
       });
-  };
-  
-  // private _getUser = async (): Promise<void> => {
-  //   this._selection.getSelection();
-  //   const sp = spfi(this._sp) 
-  //   const Details =  (this._selection.getSelection()[0] as IListItemState).Title
-  //   const user = await sp.web.currentUser();
-  //   // .then((response: any)=>{
-  //     alert(user.UserPrincipalName);
-  //     await sp.web.lists.getByTitle("POCRequest").items.add({
-  //       Title: user.UserPrincipalName,
-  //       Position: Details
-  //     });
-    // });
-    
+  };  
   
 
 }
