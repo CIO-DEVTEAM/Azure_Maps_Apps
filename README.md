@@ -4,7 +4,8 @@
 
 Displaying Azure Map using SharePoint Online list with lat and long fields.
 
-![alt text](http://url/to/img.png)
+![Global view of open job positions](https://github.com/nikomas78/SPFx_Azure_Map/blob/master/imgs/globeview.png)
+Here is what it looks like when you first load the webpart. It's a global view of the sharepoint online list items geolocations.
 
 [picture of the solution in action, if possible]
 
