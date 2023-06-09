@@ -1,8 +1,10 @@
-# react-test
+# SPFx_Azure_Map
 
 ## Summary
 
-Short summary on functionality and used technologies.
+Displaying Azure Map using SharePoint Online list with lat and long fields.
+
+
 
 [picture of the solution in action, if possible]
 
