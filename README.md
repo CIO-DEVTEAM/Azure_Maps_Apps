@@ -21,8 +21,8 @@ Here is what it looks like when you first load the webpart. It's a global view o
 > Get your own free development tenant by subscribing to [Microsoft 365 developer program](http://aka.ms/o365devprogram)
 
 ## Prerequisites
-> Create an Azure Maps Account (https://learn.microsoft.com/en-us/azure/azure-maps/quick-demo-map-app#create-an-azure-maps-account)
-> Get your Azure Maps Subscription Key (https://learn.microsoft.com/en-us/azure/azure-maps/quick-demo-map-app#get-the-subscription-key-for-your-account)
+- [Create an Azure Maps Account](https://learn.microsoft.com/en-us/azure/azure-maps/quick-demo-map-app#create-an-azure-maps-account)
+- [Get your Azure Maps Subscription Key](https://learn.microsoft.com/en-us/azure/azure-maps/quick-demo-map-app#get-the-subscription-key-for-your-account)
 
 ## Solution
 
