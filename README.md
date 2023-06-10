@@ -75,7 +75,7 @@ This is a zoomed-in view of the position after clicking on the FluentUI React De
 
 The SPFx webpart features React.js class components and PnPJS for making calls to the SPO rest API to get the list items. There are three components, a Parent class component (GlobalView.tsx) and two child components (GlobeMap.tsx, ZoomView.tsx).
 
-In the parent component, I am displaying a top and bottom div. In the top div, the global map is displayed, and the bottom div is a FluentUI detailslist with SPO list data (MapPoistionFields). I pass properties from the Parent in this.props.selectiondetails to ZoomIn.tsx to display the selected list item data into the Zoomed-in view. It then updates the top div in the parent to the Zoomed-in map view. I also pass the list item properties from the Parent into the GlobeMap.tsx and render the global view all the list items in that component. The global view is displayed when the page loads and when there is no selected list item.
+In the parent component, I am displaying a top and bottom div. In the top div, the global map is displayed, and the bottom div is a FluentUI detailslist with SPO list data (MapPoistionFields). I pass properties from the Parent in this.props.selectiondetails to ZoomView.tsx to display the selected list item data into the Zoomed-in view. It then updates the top div in the parent to the Zoomed-in map view. I also pass the list item properties from the Parent into the GlobeMap.tsx and render the global view all the list items in that component. The global view is displayed when the page loads and when there is no selected list item.
 
 Of note, I use a boolean value set to false when the GlobeMap.tsx is default, and when a list item is selected the ZoomIn prop is true and displays ZoomView.tsx.
 
