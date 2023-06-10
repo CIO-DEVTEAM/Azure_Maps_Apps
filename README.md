@@ -7,6 +7,10 @@ Displaying Azure Map using SharePoint Online list with lat and long fields.
 ![Global view of open job positions](https://github.com/nikomas78/SPFx_Azure_Map/blob/master/imgs/globeview.png)
 Here is what it looks like when you first load the webpart. It's a global view of the sharepoint online list items geolocations.
 
+![Zoomed in view of open job position](https://github.com/nikomas78/SPFx_Azure_Map/blob/master/imgs/selecteditem.png)
+This is a zoomed-in view of the position after clicking on the FluentUI React Detailslist. Each time an item is selected on the list, the map component is updated with the data. If no selection is made, the map updates to the global default view.
+
+
 [picture of the solution in action, if possible]
 
 ## Used SharePoint Framework Version
