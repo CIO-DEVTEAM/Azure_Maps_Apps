@@ -10,9 +10,6 @@ Here is what it looks like when you first load the webpart. It's a global view o
 ![Zoomed in view of open job position](https://github.com/nikomas78/SPFx_Azure_Map/blob/master/imgs/selecteditem.png)
 This is a zoomed-in view of the position after clicking on the FluentUI React Detailslist. Each time an item is selected on the list, the map component is updated with the data. If no selection is made, the map updates to the global default view.
 
-
-[picture of the solution in action, if possible]
-
 ## Used SharePoint Framework Version
 
 ![version](https://img.shields.io/badge/version-1.17.2-green.svg)
@@ -32,7 +29,7 @@ This is a zoomed-in view of the position after clicking on the FluentUI React De
 
 | Solution    | Author(s)                                               |
 | ----------- | ------------------------------------------------------- |
-| folder name | Author details (name, company, twitter alias with link) |
+| SPFx_Azure_Map | Author details (Emmanuel Jackson, MSFT) |
 
 ## Version history
 
@@ -54,22 +51,33 @@ This is a zoomed-in view of the position after clicking on the FluentUI React De
 - in the command-line run:
   - **npm install**
   - **gulp serve**
+  
+  Make sure to create a SharePoint Online list called MapPoistionFields with these fields:
+  
+  Id: string;
+  Title: string;
+  Region: string;
+  Country: string;
+  DutyDescription: string;
+  Longitude: number;
+  Latitude: number;
+  GeoLoc: string;
+  
+  ![Screenshot of the serve.json file remidning you to point to your SPO site collection](https://github.com/nikomas78/SPFx_Azure_Map/blob/master/imgs/serve.png)
+  
+  ![Screenshot of the GlobeMap.tsx file remidning you to use your Azure Maps Subscription Key](https://github.com/nikomas78/SPFx_Azure_Map/blob/master/imgs/azuremapsubkey.png)
+  
+  ![Screenshot of the ZoomView.tsx file remidning you to use your Azure Maps Subscription Key](https://github.com/nikomas78/SPFx_Azure_Map/blob/master/imgs/azuremapsubkey2.png)
 
-> Include any additional steps as needed.
+  
 
 ## Features
 
-Description of the extension that expands upon high-level summary above.
+The SPFx webpart features React.js class components and PnPJS for making calls to the SPO rest API to get the list items. There are three components, a Parent class component (GlobalView.tsx) and two child components (GlobeMap.tsx, ZoomView.tsx).
 
-This extension illustrates the following concepts:
+In the parent component, I am displaying a top and bottom div. In the top div, the global map is displayed, and the bottom div is a FluentUI detailslist with SPO list data (MapPoistionFields). I pass properties from the Parent in this.props.selectiondetails to ZoomIn.tsx to display the selected list item data into the Zoomed-in view. It then updates the top div in the parent to the Zoomed-in map view. I also pass the list item properties from the Parent into the GlobeMap.tsx and render the global view all the list items in that component. The global view is displayed when the page loads and when there is no selected list item.
 
-- topic 1
-- topic 2
-- topic 3
-
-> Notice that better pictures and documentation will increase the sample usage and the value you are providing for others. Thanks for your submissions advance.
-
-> Share your web part with others through Microsoft 365 Patterns and Practices program to get visibility and exposure. More details on the community, open-source projects and other activities from http://aka.ms/m365pnp.
+Of note, I use a boolean value set to false when the GlobeMap.tsx is default, and when a list item is selected the ZoomIn prop is true and displays ZoomView.tsx.
 
 ## References
 
