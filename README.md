@@ -1,8 +1,15 @@
-# react-test
+# SPFx_Azure_Map
 
 ## Summary
 
-Short summary on functionality and used technologies.
+Displaying Azure Map using SharePoint Online list with lat and long fields.
+
+![Global view of open job positions](https://github.com/nikomas78/SPFx_Azure_Map/blob/master/imgs/globeview.png)
+Here is what it looks like when you first load the webpart. It's a global view of the sharepoint online list items geolocations.
+
+![Zoomed in view of open job position](https://github.com/nikomas78/SPFx_Azure_Map/blob/master/imgs/selecteditem.png)
+This is a zoomed-in view of the position after clicking on the FluentUI React Detailslist. Each time an item is selected on the list, the map component is updated with the data. If no selection is made, the map updates to the global default view.
+
 
 [picture of the solution in action, if possible]
 
@@ -18,8 +25,8 @@ Short summary on functionality and used technologies.
 > Get your own free development tenant by subscribing to [Microsoft 365 developer program](http://aka.ms/o365devprogram)
 
 ## Prerequisites
-
-> Any special pre-requisites?
+- [Create an Azure Maps Account](https://learn.microsoft.com/en-us/azure/azure-maps/quick-demo-map-app#create-an-azure-maps-account)
+- [Get your Azure Maps Subscription Key](https://learn.microsoft.com/en-us/azure/azure-maps/quick-demo-map-app#get-the-subscription-key-for-your-account)
 
 ## Solution
 
