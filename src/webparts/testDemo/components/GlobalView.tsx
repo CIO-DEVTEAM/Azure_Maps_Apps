@@ -247,7 +247,7 @@ private _onRenderItemColumn = (item: IListItemState, index: number, column: ICol
       });
   };  
   
-//Dev GitHub ADO Test Color
+//Dev GitHub ADO Test Color should be orange!!
 }
 
 
