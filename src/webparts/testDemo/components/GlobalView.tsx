@@ -22,6 +22,7 @@ import ZoomView from './ZoomView';
 import { GlobeMap } from './GlobeMap';
 
 //Changed title of page to ABC MAPS
+//Creating comments for demo
 
 const exampleChildClass = mergeStyles({
   display: 'block',
