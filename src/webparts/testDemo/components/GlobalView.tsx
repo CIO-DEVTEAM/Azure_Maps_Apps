@@ -23,6 +23,7 @@ import { GlobeMap } from './GlobeMap';
 
 //Changed title of page to ABC MAPS
 //Creating comments for demo
+//Title is now bold
 
 const exampleChildClass = mergeStyles({
   display: 'block',
